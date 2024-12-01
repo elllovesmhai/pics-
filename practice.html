@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FOR ELL AND MHAI ❤️</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to bottom right, #ff758c, #ff7eb3, #ffcee7);
+            color: #eb1a1a;
+            overflow-x: hidden;
+        }
+        header {
+            text-align: center;
+            padding: 20px;
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .container {
+            text-align: center;
+            padding: 40px 20px;
+            margin: 30px auto;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 800px;
+        }
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .gallery img {
+            max-width: 200px;
+            height: auto;
+            border: 5px solid rgba(207, 57, 57, 0.8);
+            border-radius: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .gallery img:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 10px 30px rgba(255, 255, 255, 0.5);
+        }
+        input[type="file"] {
+            margin-top: 20px;
+            font-size: 1rem;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background: #ff758c;
+            color: white;
+            transition: background 0.3s ease;
+        }
+        input[type="file"]:hover {
+            background: #ff4a6e;
+        }
+        .warning {
+            color: yellow;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        footer {
+            text-align: center;
+            padding: 10px;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.2);
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        🌟 ELL AND MHAI PICS:>  🌟
+    </header>
+    <div class="container">
+        <h2>I LOVE YOU FOREVER BABY 💕</h2>
+        <p>HII BABY I MADE THIS SO WE CAN UPLOAD OUR PICS HERE,THIS PLACE IS ONLY FOR US BEBE KO I LOVE YOU SO MUCH. 😘</p>
+        <input type="file" accept="image/*" id="upload" onchange="addImage(event)">
+        <div class="warning" id="warning"></div>
+        <div class="gallery" id="gallery"></div>
+    </div>
+    <footer>
+       TOGETHER FOREVER BEBE KO I LOVE YOU SO MUCH 💖
+    </footer>
+
+    <script>
+        const MAX_PHOTOS = 100; // Maximum number of photos allowed
+
+        // Load saved images on page load
+        window.onload = function () {
+            const savedImages = JSON.parse(localStorage.getItem('imageGallery')) || [];
+            const gallery = document.getElementById('gallery');
+            savedImages.forEach(imageData => {
+                const img = document.createElement('img');
+                img.src = imageData;
+                gallery.appendChild(img);
+            });
+            updateWarning(savedImages.length);
+        };
+
+        // Add a new image and save it to localStorage
+        function addImage(event) {
+            const file = event.target.files[0];
+            const savedImages = JSON.parse(localStorage.getItem('imageGallery')) || [];
+
+            // Check if we've reached the max number of photos
+            if (savedImages.length >= MAX_PHOTOS) {
+                updateWarning(savedImages.length);
+                return;
+            }
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    document.getElementById('gallery').appendChild(img);
+
+                    // Save the new image to localStorage
+                    savedImages.push(e.target.result);
+                    localStorage.setItem('imageGallery', JSON.stringify(savedImages));
+                    updateWarning(savedImages.length);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Update the warning message if the limit is reached
+        function updateWarning(count) {
+            const warning = document.getElementById('warning');
+            if (count >= MAX_PHOTOS) {
+                warning.textContent = `You have reached the maximum limit of ${MAX_PHOTOS} photos!`;
+            } else {
+                warning.textContent = '';
+            }
+        }
+    </script>
+</body>
+</html>
